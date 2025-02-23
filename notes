@@ -1,0 +1,42 @@
+Ex Search for corn yield, in Illinois, in 2023
+nassqs(
+  commodity_desc = "CORN",      # Crop type: CORN
+  state_name = "ILLINOIS",      # State: Illinois
+  year = 2023,                  # Year: 2023
+  statisticcat_desc = "YIELD",  # Stat category: Yield
+  sector_desc = "CROPS",         # Crop-related sector
+  agg_level_desc = "STATE",      # State-level
+  reference_period_desc = "YEAR", #reference period (not forecast)
+  util_practice_desc = "GRAIN" #specific to corn
+)
+
+To get county
+nassqs(
+  commodity_desc = "CORN",      # Crop type: CORN
+  state_name = "ILLINOIS",      # State: Illinois
+  year = 2023,                  # Year: 2023
+  statisticcat_desc = "YIELD",  # Stat category: Yield
+  sector_desc = "CROPS",         # Crop-related sector
+  agg_level_desc = "COUNTY",      # County-level
+  country_name = "PIKE",          #name of country
+  reference_period_desc = "YEAR", #reference period (not forecast)
+  util_practice_desc = "GRAIN" #specific to corn
+)
+
+If wheat, 
+no "util_practice_desc"
+class_desc="ALL CLASSES"
+NOTE: DATA ON ALL YEARS ISN'T ALWAYS AVAILABLE"
+
+If soybean
+nassqs(
+  commodity_desc = "SOYBEANs",      # Crop type: SOYBEANS
+  state_name = "ILLINOIS",      # State: Illinois
+  year = 2007,                  # Year: 2023
+  statisticcat_desc = "YIELD",  # Stat category: Yield
+  sector_desc = "CROPS",         # Crop-related sector
+  agg_level_desc = "COUNTY",      # County-level
+  county_name="PIKE",
+  reference_period_desc = "YEAR",
+  domain_desc = "TOTAL"           #get actual data, rather than estimates or forecasts
+)

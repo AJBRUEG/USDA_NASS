@@ -88,17 +88,29 @@ server <- function(input, output, session) {
     all_data <- data.frame()
     
     for (year in seq(input$start_year, input$end_year)) {
+      # Initialize base query
       query <- list(
         source_desc = "SURVEY",
         commodity_desc = crop_code,
-        year = year,
+        year = as.character(year),  # Ensure year is a character string
         state_name = toupper(input$state),
         agg_level_desc = "STATE",
         statisticcat_desc = "YIELD",
         reference_period_desc = "YEAR",
-        util_practice_desc = ifelse(crop_code == "CORN", "GRAIN", ""),
-        class_desc = ifelse(crop_code=="WHEAT","ALL CLASSES","")
+        sector_desc = "CROPS"
       )
+      
+      # Conditionally add key-value pairs
+      if (crop_code == "CORN") {
+        query$util_practice_desc <- "GRAIN"
+      }
+      if (crop_code == "WHEAT") {
+        query$class_desc <- "ALL CLASSES"
+      }
+      if (crop_code == "SOYBEANS") {
+        query$domain_desc <- "TOTAL"
+      }
+      
       query <- keep(query, function(x) { x != "" })
       # print(query) #troubleshoot to make sure search is working
       
@@ -134,7 +146,7 @@ server <- function(input, output, session) {
     req(fetchData())
     data <- fetchData()
     ggplot(data, aes(x = year, y = Value,)) +
-      stat_summary(group=1,fun.y=mean,geom="line",color="green4",size=2) +
+      stat_summary(group=1,fun=mean,geom="line",color="green4",linewidth=2) +
       labs(title = paste(input$crop, "Yield in", input$state, "for", input$start_year, "to", input$end_year),
            x = "Year", y = "Yield") +
       #cleanup
